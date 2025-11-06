@@ -1,4 +1,4 @@
-# phd-training-2022
+# phd-training
 
 This repo is a selection of worked examples used in our PhD training.
 
