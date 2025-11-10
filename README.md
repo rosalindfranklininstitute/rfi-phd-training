@@ -2,7 +2,7 @@
 
 This repo is a selection of worked examples used in our PhD training.
 
-## Session 1 - Biology with python
+## zombie-run
 
 Biological examples of Python programming, to showcase some example use cases for
 programming and Python in particular.
@@ -13,14 +13,10 @@ programming and Python in particular.
 
  *  Simulating Michaelis-Menten (catalytic conversion) reactions using [PySB](https://pysb.org)
 
-## Session 2 - Basic Programming
+## basics-programming-python
 
 An introduction to the basics of programming in Python, such as importing packages,
 variables, loops and functions.
-
-## Session 3 - Programming in the Franklin Universe
-
----
 
 ## Try using Binder
 
@@ -39,7 +35,7 @@ can save your work by downloading notebooks to your local computer if desired.
 
 ## Reading list
 
-Free to download as `.pdf` files. Incredibly important resources for understanding theory and domain of computational modelling. 
+Free to download as `.pdf` files. Incredibly important resources for understanding theory and domain of computational modelling.
 
 Foundation in core techniques and fundamental mathematics for machine learning. Start here:
 1. [The Hundred-Page Machine Learning Book - Burkov](http://themlbook.com/wiki/doku.php)
