@@ -194,7 +194,7 @@ The Segmentation workflow developed for 3D images includes using smaller crops o
 When you have successfully installed Vol-Seg into its own environment (see steps above), you can use the following format to enter the correct environment and directory to begin your training and predictions. It is important to note that once you have completed a training model or prediction, you should rename and save them within your individual space away from the volume-segmantics directory; this is to stop you from overwriting your files with newly created ones and keep track of your segmentation history. 
 
 > - The *'model-train-2d'* and *'model-predict-2d'* commands can only be used once you have navigated to the cloned volume-segmantics directory. 
-> - Please read the fundamental Vol-Seg documentation information regarding command use and *Vol-Seg Settings* before using the command line. This can be found [here](https://github.com/rosalindfranklininstitute/aiimg_scripts/edit/sam-branch/README-Updated-SK.md)
+> - Please read the fundamental Vol-Seg documentation information regarding command use and *Vol-Seg Settings* before using the command line. This can be found [here](https://github.com/SamK-RFI/rfi-phd-training/blob/main/Segmentation_with_Volume_Segmantics/README-VolSeg_Updated.md)
 
 ```
 module load miniconda
