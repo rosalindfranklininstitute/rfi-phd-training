@@ -4,7 +4,7 @@ Vol-Seg - Working Example - High-Res. Human Placenta Segmentation (WINSdata)
 
 The following tutorial explains and demonstrates an example of Vol-Seg Segmentation using a 3D scan volume of the human placenta. The following instructions provided show you how to view and inspect the data volume, crop a smaller Region of Interest (ROI), train a segmentation model using this ROI-crop and use this model to obtain a prediction, and finally calculate a Dice Score relative to its Ground Truth representing the model's accuracy.
 
-To use this tutorial, you will need a virtual environment with Volume-Segmantics installed, and a separate environment with JupyterLab and napari installed. To install these packages and programs, further documentation surrounding *Vol-Seg* can be found [here](https://github.com/rosalindfranklininstitute/aiimg_scripts/edit/sam-branch/README-Updated-SK.md), and more detailed guidance about *Jupyter* and *napari* can be found [here](https://github.com/rosalindfranklininstitute/rfi-phd-training/Segmentation_with_Volume_Segmantics/RFI-developed_Workflow_and_Utility.md). 
+To use this tutorial, you will need a virtual environment with Volume-Segmantics installed, and a separate environment with JupyterLab and napari installed. To install these packages and programs, further documentation surrounding *Vol-Seg* can be found [here](https://github.com/SamK-RFI/rfi-phd-training/blob/main/Segmentation_with_Volume_Segmantics/README-VolSeg_Updated.md), and more detailed guidance about *Jupyter* and *napari* can be found [here](https://github.com/SamK-RFI/rfi-phd-training/blob/main/Segmentation_with_Volume_Segmantics/RFI-developed_Workflow_and_Utility.md). 
 
 *``
 For the 13.11.25 'Segmentation with Volume Segmantics' seminar/tutorial, environments for VolSeg and Jupyter/Napari have already been created. These environments have been previously created and distributed to your individual user spaces on the ceph server; you will find a copy of each environment on your home directory when you log into your workstation session. The directory path should be in the format '/ceph/users/'individual_user'/'. Outside of this seminar tutorial, personal versions of these environments must be created; the documentation for this can be found at https://github.com/rosalindfranklininstitute/rfi-phd-training/Segmentation_with_Volume_Segmantics/RFI-developed_Workflow_and_Utility.md.
@@ -41,7 +41,7 @@ napari
 
 You can use the napari window and the diagram/key below to view the data in both 2D and 3D; inspect the data for quality, anomalies/inconsistencies, contrast variability, scan artefacts etc.
 
-![width=150](https://github.com/rosalindfranklininstitute/aiimg_scripts/blob/sam-branch/Image_Files/napari_figure1.png)
+![width=150](https://github.com/SamK-RFI/rfi-phd-training/blob/main/Segmentation_with_Volume_Segmantics/Image_Files/napari_figure1.png)
 
 > - **(1)** Shuffle label colours **(2)** Erase tool **(3)** Paint tool **(4)** Bucket tool **(5)** Pan tool **(6)** Opacity bar **(7)** Label Selector **(8)** Tool applicator-size bar **(9)** Tool definition selector (2D or 3D) **(10)** New layer buttons (Points, Labels, Image) **(11)** Delete layer **(12)** Layer List, and Level selector **(13)** Command line **(14)** View shifter (2D/3D modes) **(15)** Change axis view (X, Y, Z) **(16)** Rotate plane (2D) **(17)** Napari Builtins plugin; Filename, Cursor place (3D), Current Axis view **(18)** Animate data and current data view (0-Z axis. 1-Y axis, 2-X axis) **(19)** Slice scroll bar **(20)** Slice viewer (current slice/overall slice total).
 
@@ -51,15 +51,15 @@ Once you are familiar with the dataset, you can then select an ROI for your trai
 
 The ROI should be no larger than 250^3 in volume; to choose your ROI, have a clear vision of where your volume starts and ends along each axis (X, Y, Z). Your volume will be represented by co-ordinates in 3D space with the format *(rangeZ, rangeY, rangeX)*, where each individual range is expressed as 2 integers; a starting slice and ending slice (the difference between the 2 equating to the length, width and height at ~250 voxels). 
 
-To navigate numerically around your data in 3D space, use the *Napari Builtins plugin* (labelled as **17** on the napari diagram/key); the cursor's location when on top of the data in the viewer will show you a 3-point coordinate with the format (Z, Y, X). The recommended approach for notating your chosen ROI can be found in the *'Protocol; ROI cropping (image and label)'* section of the [RFI-developed_Workflow_and_Utility documentation](https://github.com/rosalindfranklininstitute/rfi-phd-training/Segmentation_with_Volume_Segmantics/RFI-developed_Workflow_and_Utility.md); following these steps should produce a 6-integer co-ordinate of your ROI represented as *(Z-Z, Y-Y, X-X)*, an example of which, from a cube corner of the 700cube groundtruth *(0:250, 0:250, 0:250)*, is shown below.
+To navigate numerically around your data in 3D space, use the *Napari Builtins plugin* (labelled as **17** on the napari diagram/key); the cursor's location when on top of the data in the viewer will show you a 3-point coordinate with the format (Z, Y, X). The recommended approach for notating your chosen ROI can be found in the *'Protocol; ROI cropping (image and label)'* section of the [RFI-developed_Workflow_and_Utility documentation](https://github.com/SamK-RFI/rfi-phd-training/blob/main/Segmentation_with_Volume_Segmantics/RFI-developed_Workflow_and_Utility.md); following these steps should produce a 6-integer co-ordinate of your ROI represented as *(Z-Z, Y-Y, X-X)*, an example of which, from a cube corner of the 700cube groundtruth *(0:250, 0:250, 0:250)*, is shown below.
 
 > Do not use the '0:250, 0:250, 0:250' co-ordinates for the tutorial!
 
-![width=150](https://github.com/rosalindfranklininstitute/aiimg_scripts/blob/sam-branch/Image_Files/ROI_Example.png)
+![width=150](https://github.com/SamK-RFI/rfi-phd-training/blob/main/Segmentation_with_Volume_Segmantics/Image_Files/ROI_Example.png)
 
 ## Step 3 - Cropping your ROI;
 
-Once you have your ROI 6-integer co-ordinate written down, you can then make a crop of the original data files and save them as .tif files using the concluding script instructions found in *'Protocol; ROI cropping (image and label)'* section of the [RFI-developed_Workflow_and_Utility documentation](https://github.com/rosalindfranklininstitute/rfi-phd-training/Segmentation_with_Volume_Segmantics/RFI-developed_Workflow_and_Utility.md). *This code has been copied below for ease of access and explaination purposes*. 
+Once you have your ROI 6-integer co-ordinate written down, you can then make a crop of the original data files and save them as .tif files using the concluding script instructions found in *'Protocol; ROI cropping (image and label)'* section of the [RFI-developed_Workflow_and_Utility documentation](https://github.com/SamK-RFI/rfi-phd-training/blob/main/Segmentation_with_Volume_Segmantics/RFI-developed_Workflow_and_Utility.md). *This code has been copied below for ease of access and explaination purposes*. 
 
 The code should be input into the command line of your Napari window, interacting with your individual layers directly. The ROIs image and labels should superimpose over eachother exactly (using the same 6-integer co-ordinates) creating a smaller version of your 700CUBE image-label pair. Use this code for creating your image crop first; this will also give you a chance to check your crop dimensions and test the intended visualisation of your crop before applying the same rationale to your labels layer.
 
@@ -134,7 +134,7 @@ The command is split into 3 parts: The training programme, *model-train-2d*, the
 
 > 'directory_location_labels' = /ceph/'user'/'individual_user'/'path_to_labels_ROI.tif'
 
-![width=150](https://github.com/rosalindfranklininstitute/aiimg_scripts/blob/sam-branch/Image_Files/training_script.png)
+![width=150](https://github.com/SamK-RFI/rfi-phd-training/blob/main/Segmentation_with_Volume_Segmantics/Image_Files/training_script.png)
 
 Before you run your training model, you should first observe and confirm your training settings; to do this, navigate to the *volseg-settings* folder within the volume-segmantics directory. The *.yaml files* within this directory specify the conditions your model will be trained towards; they will be set to default however, a good practice is to make a written/visual note of or copy the file into another area before it is run to keep track of the model's conditions. The most important setting inputs can be found below.
 
@@ -143,7 +143,7 @@ A seperate copy of these settings has also been copeid to your indiviual user sp
 ``*
 
 > clip_data: True, use_2_5d_slicing: False, image_size: 256, cuda_device: 0, num_cyc_frozen: 8, num_cyc_unfrozen: 5, loss_criterion: "DiceLoss", eval_metric: "MeanIoU", encoder_weights_path: False, model: type: "U_Net" encoder_name: "resnet50" encoder_weights: "imagenet"
-> - More information surrounding the volseg training setting can be found [here](https://github.com/rosalindfranklininstitute/aiimg_scripts/blob/sam-branch/README-Updated-SK.md)
+> - More information surrounding the volseg training setting can be found [here](https://github.com/SamK-RFI/rfi-phd-training/blob/main/Segmentation_with_Volume_Segmantics/README-VolSeg_Updated.md)
 
 As the training is running, you will observe the data being sliced, a training epoch being run, and then a set of 8 frozen and 5 unfrozen training epochs working. When the training has completed, the model will be saved to the volume-segmantics folder you are currently located in; this will contain 4 files, of which you should cut and paste into a suitably named (no spaces) directory in an easily accessible place. 
 
@@ -172,12 +172,12 @@ These paths must specify the exact files ending in your saved .pytorch and .tif 
 
 > 'directory_location_new_image' = /ceph/'user'/'path_to_image-700CUBE.tif'
 
-![width=150](https://github.com/rosalindfranklininstitute/aiimg_scripts/blob/sam-branch/Image_Files/prediciton_script.png)
+![width=150](https://github.com/SamK-RFI/rfi-phd-training/blob/main/Segmentation_with_Volume_Segmantics/Image_Files/prediciton_script.png)
 
 Before you run your prediction, you should first observe and confirm your prediction settings; to do this, again navigate to the volseg-settings folder within the volume-segmantics directory. The *.yaml files* conditions will again be set to default however, a good practice is to make a note of or copy the file into the same area as your copied training settings before it is run to keep track of the model output conditions. The most important setting inputs can be found below.
 
 > quality: medium, clip_data: True, cuda_device: 0, downsample: False, prediction_axis: Z, output_size: 512, use_2_5d_prediction: False
-> - More information surrounding the volseg prediction setting can be found [here](https://github.com/rosalindfranklininstitute/aiimg_scripts/blob/sam-branch/README-Updated-SK.md)
+> - More information surrounding the volseg prediction setting can be found [here](https://github.com/SamK-RFI/rfi-phd-training/blob/main/Segmentation_with_Volume_Segmantics/README-VolSeg_Updated.md)
 
 When the prediction has completed, a .tif file will be saved to the volume-segmantics folder you are currently located in; you should cut and paste this into the same space/directory as its corresponding model or in an easily accessible place.
 
@@ -199,11 +199,11 @@ Use the Layer list (labelled as **12** on the napari diagram/key) to toggle on a
 
 - This will give you a complete visual representation of your model and predictions effectiveness.
 
-![width=150](https://github.com/rosalindfranklininstitute/aiimg_scripts/blob/sam-branch/Image_Files/prediction_napari.png)
+![width=150](https://github.com/SamK-RFI/rfi-phd-training/blob/main/Segmentation_with_Volume_Segmantics/Image_Files/prediction_napari.png)
 
 To produce a numerical representation of your model's effectiveness, we use a Dice Score to measure your predictions' labels relative to the original Ground Truth labels. In order to calculate this, we are going to use a **Jupyter notebook** linked to the console's computing power to speed up the process.
 
-A "master Jupyter notebook" for calculating a DiceScore using a GroundTruth (the original '700CUBE') and a segmentation of the same size (your prediction labels, 700CUBE) can be found in the [Jupyter_Notebooks directory](https://github.com/rosalindfranklininstitute/rfi-phd-training/Segmentation_with_Volume_Segmantics/Jupyter_Notebooks), and in order to use the notebook, you must first open a Jupyter session. 
+A "master Jupyter notebook" for calculating a DiceScore using a GroundTruth (the original '700CUBE') and a segmentation of the same size (your prediction labels, 700CUBE) can be found in the [Jupyter_Notebooks directory](https://github.com/SamK-RFI/rfi-phd-training/blob/main/Segmentation_with_Volume_Segmantics/Jupyter_Notebooks/Manual_DiceScore_MASTER.ipynb), and in order to use the notebook, you must first open a Jupyter session. 
 
 To open a Jupyter session, you will need to use a new terminal and activate the same working environment as the one used to open Napari; *you cannot use the same terminal as the one already open for running Napari, as using it for running additional code will kill the current Napari session*;
 
@@ -224,7 +224,7 @@ jupyter lab
 
 Once your Jupyter session is open, navigate to the'Jupyter_Notebooks' folder on the Github repo where a copy the *'Manual_DiceScore_MASTER.ipynb'* file is stored and download it; this will then appear in your downloads folder in your home space. Navigate to the same file within your Jupyter session using the File-Navigator (location [3]) on the left side of the Jupyter interface; double-clicking the file will then open it in the main window alongside the lauch menu. Once opened, the notebook can then be interacted with and run. 
 
-![width=150](https://github.com/rosalindfranklininstitute/aiimg_scripts/blob/sam-branch/Image_Files/jupyter.png)
+![width=150](https://github.com/SamK-RFI/rfi-phd-training/blob/main/Segmentation_with_Volume_Segmantics/Image_Files/jupyter.png)
 
 > - **(1)** Run; run selected cells/run all cells, **(2)** Kernel; interrupt/Reconnect/Restart Kernel session, **(3)** File-Navigator, **(4)** Table of Contents, **(5)** Viewer panel, **(6)** Notebook tab, **(7)** Executable cell (code), **(8)** Note cell (markdown).
 
@@ -238,4 +238,4 @@ The first cell of the notebook contains installation information regarding how t
 
 - Once obtained, make a not eof your DiceScore to compare your model's efficiency against others that you might produce. 
 
- > More information regarding Jupyter and Napari utility and functionality can be found on the links within the [RFI-developed_Workflow_and_Utility documentation](https://github.com/rosalindfranklininstitute/rfi-phd-training/Segmentation_with_Volume_Segmantics/RFI-developed_Workflow_and_Utility.md).
+ > More information regarding Jupyter and Napari utility and functionality can be found on the links within the [RFI-developed_Workflow_and_Utility documentation](https://github.com/SamK-RFI/rfi-phd-training/blob/main/Segmentation_with_Volume_Segmantics/RFI-developed_Workflow_and_Utility.md).
