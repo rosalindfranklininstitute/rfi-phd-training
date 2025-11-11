@@ -2,7 +2,7 @@
 
 Development of this package is moving to the Rosalind Franklin Institute. A fork is now available at [https://github.com/rosalindfranklininstitute/volume-segmantics]
 
-New documentation for VolSeg 2.2 (including updated to 2.5D functionality) is currently being finalised and updated. the most up-to-date documentation reguarding this version can be found [here](https://github.com/rosalindfranklininstitute/aiimg_scripts/tree/main)
+New documentation for VolSeg 2.2 (including updated to 2.5D functionality) is currently being finalised and updated. the most up-to-date documentation reguarding this version can be found at [https://github.com/rosalindfranklininstitute/aiimg_scripts/tree/main]
 
 <h1 align="center">
 Volume Segmantics 
