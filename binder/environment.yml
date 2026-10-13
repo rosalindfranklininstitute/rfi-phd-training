@@ -1,0 +1,14 @@
+# Environment for Binder (repo2docker)
+channels:
+  - conda-forge
+  - alubbock   # PySB is published here; everything else is on conda-forge
+dependencies:
+  - python=3.10
+  - jupyterlab
+  - notebook
+  - numpy
+  - scipy
+  - matplotlib
+  - pandas
+  - openpyxl   # enzyme kinetics notebooks read .xlsx data files
+  - pysb       # Zombie and Michaelis-Menten notebooks
